@@ -1,0 +1,19 @@
+.die {
+  background-color: white;
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+  font-size: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.held {
+  background-color: #59E391 !important;
+  color: white;
+}
+
+.die:hover {
+  cursor: pointer;
+}

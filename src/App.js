@@ -14,7 +14,6 @@ function App() {
     }
     return diceArray
   }
-  console.log(dice)
   function generateDice() {
     return {
       id: nanoid(),
@@ -22,9 +21,15 @@ function App() {
       isHeld: false,
     }
   }
+  console.log(dice)
+  function holdDie(id) {
+    const newDice = dice.map(die => die.id === id ? {...die, isHeld: true }: die)
+    setDice(oldDice => newDice)
+  }
+
   return (
     <>
-      <Container dice={dice}/>
+      <Container dice={dice} setDice={setDice} holdDie={holdDie}/>
       <Background/>
     </>
   );
