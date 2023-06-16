@@ -1,0 +1,16 @@
+.info-button {
+  color: var(--third-color);
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  cursor: pointer;
+}
+
+.back-button {
+  cursor: pointer;
+  color: var(--third-color);
+  font-size: 20px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}

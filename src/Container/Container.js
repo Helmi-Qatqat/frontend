@@ -1,6 +1,6 @@
 import './Container.css'
 import Die from '../Die/Die'
-
+import TextModal from '../info-modal/info-modal';
 export default function Container(props) {
   const diceElements = props.dice.map(e => (
     <Die
@@ -14,10 +14,16 @@ export default function Container(props) {
   return (
     <>
       <div className='game-container'>
+        <TextModal/>
+        
+        <div className='text-header'>{props.won ? "You Won!" : "Tenzies"}</div>
         <div className='dice-container'>
           {diceElements}
         </div>
-        <button className='game-button'>Roll</button>
+        <button
+          className='game-button'
+          onClick={props.rollDice}
+          >{props.won ? "New Game":"Roll"}</button>
       </div>
     </>
   )
