@@ -1,6 +1,9 @@
 import './Background.css'
-export default function Background() {
+import Confetti from 'react-confetti'
+export default function Background(props) {
   return (
+    <>
+      {props.won && <Confetti width={window.innerWidth} height={window.innerHeight}/>}
       <div className="area" >
             <ul className="circles">
                     <li></li>
@@ -15,5 +18,7 @@ export default function Background() {
                     <li></li>
             </ul>
     </div >
+    </>
+      
   )
 }
