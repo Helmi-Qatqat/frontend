@@ -1,11 +1,17 @@
 import './Die.css'
 
 export default function Dice(props) {
-
+  function dieHandler() {
+    props.holdDie(props.id)
+    if(!props.isStarted) {
+      props.setIsStarted(true)
+      props.startTimer()
+    }
+  }
   return (
     <div
       className={`die ${props.isHeld ? 'held' : ""}`}
-      onClick={() => props.holdDie(props.id)}
+      onClick={dieHandler}
       >
       {props.value}
     </div>

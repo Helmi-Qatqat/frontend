@@ -115,6 +115,22 @@
     animation-duration: 11s;
     border-radius: 15px;
 }
+.circles li:nth-child(11){
+    left: 5%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 0s;
+    animation-duration: 15s;
+    border-radius: 15px;
+}
+.circles li:nth-child(12){
+    left: 20%;
+    width: 60px;
+    height: 60px;
+    animation-delay: 0.5s;
+    animation-duration: 11s;
+    border-radius: 15px;
+}
 
 
 

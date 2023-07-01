@@ -1,0 +1,11 @@
+.roll-count-container {
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  letter-spacing: 1.5px;
+}
+
+.roll-count-container svg {
+  color: var(--fourth-color) !important;
+}

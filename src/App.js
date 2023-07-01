@@ -54,6 +54,7 @@ function App() {
         setDice={setDice}
         holdDie={holdDie}
         rollDice={rollDice}
+        setWon={setWon}
         won={won}/>
       <Background won={won}/>
     </div>
