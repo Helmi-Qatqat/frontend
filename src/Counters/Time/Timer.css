@@ -1,0 +1,10 @@
+.timer-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--fourth-color)
+}
+.time-container {
+  color: white;
+  letter-spacing: 1.5px;
+}

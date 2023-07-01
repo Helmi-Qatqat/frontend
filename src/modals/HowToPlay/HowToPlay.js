@@ -1,3 +1,4 @@
+import './HowToPlay.css'
 import * as React from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
@@ -5,8 +6,9 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Typography from '@mui/material/Typography';
 import InfoIcon from '@mui/icons-material/Info';
+import { useState } from 'react';
 import ArrowCircleRightRoundedIcon from '@mui/icons-material/ArrowCircleRightRounded';
-import './info-modal.css'
+
 
 const style = {
   position: 'absolute',
@@ -22,14 +24,19 @@ const style = {
   p: 4,
 };
 
-export default function TransitionsModal() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+export default function HowToPlay(props) {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+    props.setIsOpen(true)
+  };
+  const handleClose = () => {
+    setOpen(false)
+    props.setIsOpen(false);
+  };
 
   return (
     <div>
-      
       <InfoIcon className='info-button' onClick={handleOpen}/>
       <Modal
         aria-labelledby="transition-modal-title"
