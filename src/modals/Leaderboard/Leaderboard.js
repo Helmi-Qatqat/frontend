@@ -6,10 +6,11 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Typography from '@mui/material/Typography';
 import LeaderboardIcon from '@mui/icons-material/Leaderboard';
-import { useState } from 'react';
+import axios from 'axios'
+import { useState, useEffect } from 'react';
 import ArrowCircleRightRoundedIcon from '@mui/icons-material/ArrowCircleRightRounded';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
-import { Minimize } from '@mui/icons-material';
+// import { Minimize } from '@mui/icons-material';
 
 
 const style = {
@@ -28,6 +29,18 @@ const style = {
 
 export default function Leaderboard(props) {
   const [open, setOpen] = useState(false);
+  const [leaderboardTimes, setLeaderboardTimes] = useState(null)
+  const [bestTime, setBestTime] = useState(() => {
+    if(localStorage.getItem('user_data')) {
+      return JSON.parse(localStorage.getItem('user_data')).best_time
+    } else return null
+  })
+
+  useEffect(() => {
+    setBestTime( (oldTime) => {
+      return JSON.parse(localStorage.getItem('user_data')).best_time
+    })
+  },[bestTime, props.won, open])
 
   function abstractTime(str) {
     if(+str === 0) {
@@ -35,17 +48,17 @@ export default function Leaderboard(props) {
     } else {
       const time = new Date(+str)
       const minutes = time.getMinutes().toString().padStart(2, '0');
-      console.log(str)
-      console.log(minutes)
       const seconds = time.getSeconds().toString().padStart(2, '0');
       const milliseconds = (time.getMilliseconds() / 10).toString().padStart(2, '0');
       return `${minutes}:${seconds}.${milliseconds}`
     }
   }
-
-  const handleOpen = () => {
+  const handleOpen = async () => {
     setOpen(true);
     props.setIsOpen(true)
+    const url = process.env.REACT_APP_SERVER_URL
+    const records = await axios.get(url + '/leaderboard')
+    setLeaderboardTimes(records.data)
   };
   const handleClose = () => {
     setOpen(false)
@@ -80,13 +93,23 @@ export default function Leaderboard(props) {
             <div className='leaderboard-grid'>
               <div className='user-scores'>
                 <div>
-                  <span>Your best Time: {abstractTime(localStorage.getItem('best-time'))}</span>
+                  <span>Your best Time: {abstractTime(bestTime)}</span>
                 </div>
               </div>
             </div>
-            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-            Roll until all dice are the same. Click each die to freeze it at its current value between rolls.
-            </Typography>
+            <div className='leaderboard-scores'>
+              <div className='leaderboard-scores-header'>
+                <span>#</span><span>name</span><span>time record</span>
+              </div>
+              {leaderboardTimes && leaderboardTimes.map((e,i) => (                
+                <div>
+                  <span>{i + 1}</span>
+                  <span>{e.username}</span>
+                  <span>{abstractTime(e.best_time)}</span>
+                </div>
+              )
+              )}
+            </div>
           </Box>
         </Fade>
       </Modal>

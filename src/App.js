@@ -3,6 +3,8 @@ import { nanoid } from "nanoid"
 import './App.css';
 import Background from './Background/Background';
 import Container from './Container/Container';
+import Login from './Login/Login';
+import { Routes, Route } from 'react-router-dom';
 
 function App() {
   const [dice, setDice] = useState(generateDices())
@@ -49,13 +51,19 @@ function App() {
 
   return (
     <div className='tenzies-container'>
-      <Container
-        dice={dice}
-        setDice={setDice}
-        holdDie={holdDie}
-        rollDice={rollDice}
-        setWon={setWon}
-        won={won}/>
+      <Routes>
+        <Route path={'/'} element={
+          <Container
+          dice={dice}
+          setDice={setDice}
+          holdDie={holdDie}
+          rollDice={rollDice}
+          setWon={setWon}
+          won={won}/>
+        }/>
+        <Route path={'/signup'} element={<Login/>}/>
+        <Route path={'/signin'} element={<Login/>}/>
+      </Routes>
       <Background won={won}/>
     </div>
   );

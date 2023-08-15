@@ -19,3 +19,26 @@
   gap: 5px;
   align-items: center;
 }
+.leaderboard-scores div:first-child {
+  background-color: var(--second-color);
+}
+.leaderboard-scores {
+  margin-top: 25px;
+  display: flex;
+  flex-flow: column;
+  gap: 10px;
+}
+.leaderboard-scores div {
+  display: flex;
+  padding: 10px;
+  gap: 50px;
+  background-color: var(--fourth-color);
+  color: white;
+  font-weight: 600;
+  
+  justify-content: start;
+}
+.leaderboard-scores div span {
+  min-width: 50px;
+  display: block;
+}
