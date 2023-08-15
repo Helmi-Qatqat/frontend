@@ -5,7 +5,6 @@ export default function Timer(props) {
   const minutes = props.startTime.minutes.toString().padStart(2, '0');
   const seconds = props.startTime.seconds.toString().padStart(2, '0');
   const milliseconds = props.startTime.milliseconds.toString().padStart(2, '0');
-  
   return (
     <>
         <div className="timer-container">

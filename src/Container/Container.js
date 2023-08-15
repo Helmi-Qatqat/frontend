@@ -2,7 +2,9 @@ import './Container.css';
 import Die from '../Die/Die';
 import ModalContainer from '../modals/ModalContainer';
 import Counters from '../Counters/Counters';
+import axios from 'axios'
 import { useEffect, useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const usePageVisibility = () => {
   const [isVisible, setIsVisible] = useState(true);
@@ -62,27 +64,33 @@ export default function Container(props) {
       }
     }
   }
-  
+  let navigate = useNavigate()
+
   useEffect(() => {
-    if (isOpen) {
-      stopTimer()
-    } else if(isOpen) {
-      startTimer();
+    if(!localStorage.getItem('user_data')) {
+      navigate('/signin')
     }
-    if (props.won) {
-      stopTimer();
-      function toDate() {
-        const time = new Date(0);
-        time.setMinutes(startTime.minutes, startTime.seconds,startTime.milliseconds * 10);
-        return time.getTime()
-      }
-      localStorage.setItem("best-time", toDate());
-    } else if (!isOpen && isVisible && isStarted && !timerInterval) {
-      startTimer();
-    } else if (isOpen && !isVisible && timerInterval) {
-      stopTimer();
+    function toDate() {
+      const time = new Date(0);
+      time.setMinutes(startTime.minutes, startTime.seconds, startTime.milliseconds * 10);
+      return time.getTime()
     }
-  }, [props.won, isVisible, isStarted, timerInterval, startTimer, stopTimer, isOpen]);
+    if(props.won) {
+      const url = process.env.REACT_APP_SERVER_URL
+      axios.put(url + '/updateRecord', {
+        username: JSON.parse(localStorage.getItem('user_data')).username,
+        best_time: toDate()})
+        .then(result => localStorage.setItem('user_data', JSON.stringify(result.data)))
+    }
+  }, [navigate, props.won, startTime])
+
+  useEffect(() => {
+    if (isOpen) stopTimer()
+    else if(isOpen) startTimer();
+    if (props.won) stopTimer();
+    else if (!isOpen && isVisible && isStarted && !timerInterval) startTimer();
+    else if (isOpen && !isVisible && timerInterval) stopTimer();
+  }, [props.won, isVisible, isStarted, timerInterval, startTimer, stopTimer, isOpen, startTime]);
   
   const diceElements = props.dice.map((e) => (
     <Die
@@ -101,7 +109,7 @@ export default function Container(props) {
     <>
       <div className="game-container">
         <Counters won={props.won} isStarted={isStarted} startTime={startTime} rollCount={rollCount} />
-        <ModalContainer startTimer={startTimer} stopTimer={stopTimer} isStarted={isStarted} setIsOpen={setIsOpen}/>
+        <ModalContainer won={props.won} startTimer={startTimer} stopTimer={stopTimer} isStarted={isStarted} setIsOpen={setIsOpen}/>
         <div className="text-header">{props.won ? "You Won!" : "Tenzies"}</div>
         <div className="dice-container">{diceElements}</div>
         <button className="game-button" onClick={gameButtonHandler}>

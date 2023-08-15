@@ -6,7 +6,7 @@ export default function ModalContainer(props) {
   return (
     <div className="modals-container">
       <HowToPlay startTimer={props.startTimer} stopTimer={props.stopTimer} isStarted={props.isStarted} setIsOpen={props.setIsOpen}/>
-      <Leaderboard startTimer={props.startTimer} stopTimer={props.stopTimer} isStarted={props.isStarted} setIsOpen={props.setIsOpen}/>
+      <Leaderboard won={props.won} startTimer={props.startTimer} stopTimer={props.stopTimer} isStarted={props.isStarted} setIsOpen={props.setIsOpen}/>
     </div>
   )
 }
